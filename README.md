@@ -55,7 +55,7 @@ python run_inspection.py --board esp32 --image path\frame.jpg --no-display
 
 ### Database: Arduino Nano, Orange Pi, Raspberry Pi
 
-Mode ini memang menggunakan gambar input, bukan webcam dan bukan YOLO:
+Mode ini memang menggunakan gambar input:
 
 ```powershell
 python run_inspection.py --board arduino_nano --image inspection_image\ArduinoNano.png
@@ -74,7 +74,7 @@ $env:PCB_DB_MISSING_THRESHOLD = "0.50"
 python run_inspection.py --board orange_pi --image path\frame.jpg
 ```
 
-## API demo
+## API
 
 ```powershell
 uvicorn backend.main:app --reload
@@ -103,7 +103,7 @@ produksi, marker ArUco pada jig dapat meningkatkan repeatability.
 mengganti model, pertahankan nama file atau sesuaikan `MODEL_PATH` di
 `backend/inspection_service.py`.
 
-## Docker Compose (recommended for hackathon demo)
+## Docker Compose
 
 Backend dapat dijalankan sebagai satu service sinkron menggunakan Docker Compose.
 Tidak ada background worker, queue, distributed database, atau automated data-logging
@@ -137,31 +137,4 @@ Untuk menghentikan service:
 ```powershell
 docker compose down
 ```
-
-### Alur deployment demo
-
-```text
-Browser Web UI
-      |
-      | POST /api/inspect/{board_id}
-      v
-Docker Compose
-      |
-      v
-FastAPI Backend
-      |
-      +--> Alignment / Reference Matching
-      |
-      +--> YOLO Inference (Arduino UNO / ESP32)
-      |
-      v
-Inspection Result (JSON)
-      |
-      v
-Web UI
-```
-
-> Catatan: `run_web.py` dan seluruh pipeline AI tetap dapat dijalankan dengan cara
-> lokal Python seperti sebelumnya. Docker Compose hanya menyediakan cara deployment
-> tambahan untuk kebutuhan demonstrasi dan penilaian hackathon.
 
